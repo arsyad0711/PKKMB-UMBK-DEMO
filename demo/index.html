@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Absensi PKKMB — Universitas Muhammadiyah Bekasi Karawang</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  html, body {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body {
+    background: #1a0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ==================== PREMIUM RED BACKGROUND ==================== */
+  .bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 20% 15%, rgba(220, 38, 38, 0.35) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 85%, rgba(153, 27, 27, 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, #2a0505 0%, #1a0000 60%, #0d0000 100%);
+  }
+
+  .ornament {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(220, 38, 38, 0.15);
+    animation: rotateSlow 30s linear infinite;
+  }
+  .ornament.o1 { width: 500px; height: 500px; top: -180px; left: -180px; }
+  .ornament.o2 { width: 400px; height: 400px; bottom: -150px; right: -150px; animation-direction: reverse; }
+  .ornament.o3 {
+    width: 600px; height: 600px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border-color: rgba(220, 38, 38, 0.08);
+  }
+  .ornament.o1::before, .ornament.o2::before {
+    content: '';
+    position: absolute;
+    inset: 30px;
+    border-radius: 50%;
+    border: 1px dashed rgba(220, 38, 38, 0.2);
+  }
+  .ornament.o1::after, .ornament.o2::after {
+    content: '';
+    position: absolute;
+    inset: 70px;
+    border-radius: 50%;
+    border: 1px solid rgba(220, 38, 38, 0.1);
+  }
+
+  @keyframes rotateSlow {
+    to { transform: rotate(360deg); }
+  }
+  .ornament.o3 { animation: rotateSlow 45s linear infinite; }
+
+  .particles {
+    position: absolute;
+    inset: 0;
+  }
+  .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #fbbf24;
+    box-shadow: 0 0 8px #fbbf24, 0 0 16px rgba(251, 191, 36, 0.5);
+    opacity: 0.6;
+    animation: rise 12s linear infinite;
+  }
+  .particle:nth-child(1) { left: 8%;  animation-delay: 0s;   animation-duration: 14s; }
+  .particle:nth-child(2) { left: 22%; animation-delay: 2s;   animation-duration: 12s; }
+  .particle:nth-child(3) { left: 38%; animation-delay: 4s;   animation-duration: 16s; }
+  .particle:nth-child(4) { left: 55%; animation-delay: 1s;   animation-duration: 13s; }
+  .particle:nth-child(5) { left: 72%; animation-delay: 3s;   animation-duration: 15s; }
+  .particle:nth-child(6) { left: 88%; animation-delay: 5s;   animation-duration: 11s; }
+  .particle:nth-child(7) { left: 15%; animation-delay: 6s;   animation-duration: 17s; }
+  .particle:nth-child(8) { left: 65%; animation-delay: 7s;   animation-duration: 12s; }
+  .particle:nth-child(9) { left: 45%; animation-delay: 8s;   animation-duration: 14s; }
+
+  @keyframes rise {
+    0% {
+      transform: translateY(100vh) scale(0);
+      opacity: 0;
+    }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% {
+      transform: translateY(-20vh) scale(1);
+      opacity: 0;
+    }
+  }
+
+  .beam {
+    position: absolute;
+    top: -50%;
+    left: -10%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(115deg,
+      transparent 40%,
+      rgba(220, 38, 38, 0.08) 50%,
+      transparent 60%);
+    animation: beamMove 12s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes beamMove {
+    0%, 100% { transform: translateX(-10%); }
+    50% { transform: translateX(10%); }
+  }
+
+  /* ==================== MAIN CONTAINER ==================== */
+  .container {
+    width: 100%;
+    max-width: 560px;
+    background: linear-gradient(180deg,
+      rgba(45, 10, 10, 0.85) 0%,
+      rgba(26, 5, 5, 0.9) 100%);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border-radius: 26px;
+    padding: 44px 38px 38px;
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.7),
+      0 0 100px rgba(220, 38, 38, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    position: relative;
+    z-index: 5;
+    margin: 20px 0;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .container::before {
+  content: none;
+}
+
+  .container::after {
+  content: none;
+}
+
+  @keyframes borderFlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ==================== HEADER ==================== */
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .pkkmb-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.25), rgba(153, 27, 27, 0.4));
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    color: #fbbf24;
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 7px 18px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.15);
+  }
+
+  .pkkmb-badge svg {
+    width: 14px;
+    height: 14px;
+    stroke: #fbbf24;
+    stroke-width: 2.2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ==================== LOGO UNIVERSITAS ==================== */
+  .logo-wrapper {
+    width: 145px;
+    height: 145px;
+    margin: 0 auto 18px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+      #fbbf24 0deg,
+      #dc2626 90deg,
+      #fbbf24 180deg,
+      #dc2626 270deg,
+      #fbbf24 360deg);
+    animation: spin 5s linear infinite;
+    filter: blur(1px);
+    opacity: 0.9;
+  }
+
+  .logo-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: #fef3c7;
+    z-index: 0;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.8);
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .logo-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow:
+      inset 0 0 30px rgba(220, 38, 38, 0.15),
+      0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .logo-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0;
+}
+
+  .logo-fallback {
+    width: 60%;
+    height: 60%;
+    stroke: #991b1b;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .laurel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 8px 0 16px;
+  }
+  .laurel-line {
+    height: 1px;
+    width: 55px;
+    background: linear-gradient(90deg, transparent, #fbbf24, transparent);
+  }
+  .laurel-star {
+    color: #fbbf24;
+    font-size: 16px;
+    text-shadow: 0 0 12px rgba(251, 191, 36, 0.8);
+    animation: twinkleStar 2s ease-in-out infinite;
+  }
+  @keyframes twinkleStar {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  .uni-name {
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 20px rgba(220, 38, 38, 0.5);
+  }
+
+  .uni-name .gold {
+    background: linear-gradient(90deg, #fbbf24, #fef3c7, #fbbf24);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shine 4s linear infinite;
+    display: block;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+
+  @keyframes shine {
+    to { background-position: 200% center; }
+  }
+
+  .header h1 {
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .header p {
+    color: rgba(254, 226, 226, 0.65);
+    font-size: 13px;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .demo-notice {
+    margin: 0 0 24px;
+    padding: 12px 16px;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-radius: 12px;
+    background: rgba(251, 191, 36, 0.08);
+    color: #fde68a;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* ==================== FORM ==================== */
+  .form-group {
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .form-group label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #fbbf24;
+    font-size: 11.5px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .form-group label svg {
+    width: 14px;
+    height: 14px;
+    stroke: #fbbf24;
+    stroke-width: 2.2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 15px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1.5px solid rgba(220, 38, 38, 0.3);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14.5px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .form-group input::placeholder {
+    color: rgba(254, 226, 226, 0.35);
+    font-style: italic;
+  }
+
+  .form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23fbbf24' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-color: rgba(0, 0, 0, 0.35);
+    padding-right: 42px;
+  }
+
+  .form-group select option {
+    background: #1a0000;
+    color: #fff;
+  }
+
+  .form-group input:disabled,
+  .form-group select:disabled {
+    opacity: 1;
+    cursor: not-allowed;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #fbbf24;
+    background: rgba(220, 38, 38, 0.15);
+    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.12),
+                0 0 25px rgba(220, 38, 38, 0.4);
+    transform: translateY(-1px);
+  }
+
+  /* ==================== UPLOAD AREA ==================== */
+  .upload-area {
+    border: 2px dashed rgba(220, 38, 38, 0.5);
+    border-radius: 14px;
+    padding: 26px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(220, 38, 38, 0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upload-area:hover {
+    border-color: #fbbf24;
+    background: rgba(220, 38, 38, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.25);
+  }
+
+  .upload-area.dragover {
+    border-color: #fbbf24;
+    background: rgba(251, 191, 36, 0.15);
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
+  }
+
+  .upload-area input[type="file"] { display: none; }
+  .demo-only .upload-area {
+    cursor: not-allowed;
+  }
+
+  .demo-only .upload-area:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+
+  .upload-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 12px;
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.5),
+                0 0 30px rgba(220, 38, 38, 0.25);
+    position: relative;
+    animation: pulseRed 2.5s ease-in-out infinite;
+  }
+
+  .upload-icon::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 17px;
+    background: linear-gradient(135deg, #fbbf24, transparent, #fbbf24);
+    opacity: 0.5;
+    z-index: -1;
+    animation: spin 4s linear infinite;
+  }
+
+  @keyframes pulseRed {
+    0%, 100% {
+      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.5), 0 0 30px rgba(220, 38, 38, 0.25);
+    }
+    50% {
+      box-shadow: 0 8px 30px rgba(251, 191, 36, 0.6), 0 0 50px rgba(220, 38, 38, 0.5);
+    }
+  }
+
+  .upload-icon svg {
+    width: 26px;
+    height: 26px;
+    stroke: #fef3c7;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .upload-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13.5px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+  }
+
+  .upload-text span {
+    color: #fbbf24;
+    text-decoration: underline;
+  }
+
+  .upload-hint {
+    color: rgba(254, 226, 226, 0.5);
+    font-size: 11.5px;
+    margin-top: 5px;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+  }
+
+  .preview-container {
+    display: none;
+    margin-top: 16px;
+    text-align: center;
+  }
+  .preview-container.show { display: block; }
+
+  .preview-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    padding: 4px;
+    background:
+      linear-gradient(#1a0000, #1a0000) padding-box,
+      linear-gradient(135deg, #fbbf24, #dc2626, #fbbf24) border-box;
+    border: 3px solid transparent;
+    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.5),
+                0 0 40px rgba(251, 191, 36, 0.3);
+    margin-bottom: 10px;
+    animation: floatImg 3s ease-in-out infinite;
+  }
+
+  @keyframes floatImg {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .preview-name {
+    color: rgba(254, 226, 226, 0.8);
+    font-size: 12px;
+    margin-bottom: 8px;
+    word-break: break-all;
+    font-style: italic;
+  }
+
+  .remove-btn {
+    background: rgba(220, 38, 38, 0.2);
+    color: #fca5a5;
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.5px;
+  }
+
+  .remove-btn:hover {
+    background: rgba(220, 38, 38, 0.35);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
+    color: #fff;
+  }
+
+  /* ==================== SUBMIT BUTTON ==================== */
+  .submit-btn {
+    width: 100%;
+    padding: 17px;
+    margin-top: 14px;
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 50%, #dc2626 100%);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14.5px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 10px 30px rgba(220, 38, 38, 0.5),
+      0 0 40px rgba(220, 38, 38, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    animation: gradientMove 5s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  @keyframes gradientMove {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #fbbf24, transparent);
+  }
+
+  .submit-btn svg {
+    width: 17px;
+    height: 17px;
+    stroke: #fbbf24;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.35), transparent);
+    transition: left 0.7s ease;
+  }
+
+  .submit-btn:hover::before { left: 100%; }
+
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 18px 45px rgba(220, 38, 38, 0.7),
+      0 0 60px rgba(251, 191, 36, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .submit-btn:active { transform: translateY(0); }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ==================== FOOTER ==================== */
+  .form-footer {
+    text-align: center;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    position: relative;
+    z-index: 2;
+  }
+
+  .form-footer p {
+    color: rgba(254, 226, 226, 0.5);
+    font-size: 11.5px;
+    letter-spacing: 0.5px;
+    font-style: italic;
+  }
+
+  .form-footer strong {
+    color: #fbbf24;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  /* ==================== TOAST ==================== */
+.toast {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+
+  transform: translateX(-50%) translateY(-120px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  /* SUCCESS = HIJAU */
+  background: linear-gradient(135deg, #16a34a, #15803d);
+
+  backdrop-filter: blur(10px);
+  color: #fff;
+
+  padding: 14px 24px;
+  border-radius: 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  box-shadow:
+    0 10px 40px rgba(22, 163, 74, 0.35),
+    0 0 25px rgba(22, 163, 74, 0.2);
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 90vw;
+
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ERROR = MERAH */
+.toast.error {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+
+  box-shadow:
+    0 10px 40px rgba(220, 38, 38, 0.5),
+    0 0 30px rgba(220, 38, 38, 0.3);
+}
+
+.toast svg {
+  width: 20px;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body class="demo-only">
+
+<!-- ============== BACKGROUND ============== -->
+<div class="bg-layer">
+  <div class="beam"></div>
+  <div class="ornament o1"></div>
+  <div class="ornament o2"></div>
+  <div class="ornament o3"></div>
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+</div>
+
+<!-- ============== CONTAINER ============== -->
+<div class="container">
+
+  <div class="header">
+    <div class="pkkmb-badge">
+      <svg viewBox="0 0 24 24">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      PKKMB 2026
+    </div>
+
+    <div class="logo-wrapper">
+  <div class="logo-inner">
+    <img src="logo.png"
+         alt="Logo Universitas Muhammadiyah Bekasi Karawang">
+  </div>
+</div>
+
+    <div class="laurel">
+      <div class="laurel-line"></div>
+      <div class="laurel-star">★</div>
+      <div class="laurel-line"></div>
+    </div>
+
+    <div class="uni-name">
+      Universitas Muhammadiyah
+      <span class="gold">Bekasi Karawang</span>
+    </div>
+    <h1>"PRESENSI KEHADIRAN"</h1>
+    <p>Masa Ta'aruf Mahasiswa Universitas Muhammadiyah Bekasi Karawang
+Tahun Akademik 2026/2027</p>
+  </div>
+
+  <div class="demo-notice" role="note">
+    Demo tampilan saja — data tidak dikirim atau disimpan.
+  </div>
+
+  <div id="absensiForm" aria-label="Contoh tampilan form absensi">
+
+     <div class="form-group">
+      <label for="nama">
+        <svg viewBox="0 0 24 24">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        Nama Lengkap
+      </label>
+      <input type="text" id="nama" name="nama" placeholder="Contoh: Siti Amelia Putri"
+             autocomplete="name" maxlength="100" disabled>
+    </div>
+
+    <div class="form-group">
+      <label for="nim">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM8 7c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm4 10H4v-1c0-1.3 2.7-2 4-2s4 .7 4 2v1zm6-6h-4V9h4v2zm0 4h-4v-2h4v2z"/>
+  </svg>
+        Nomor Induk Mahasiswa / NO PENDAFTARAN
+      </label>
+      <input type="text" id="nim" name="nim" placeholder="Contoh: 20250101234"
+             inputmode="numeric" maxlength="15" autocomplete="off" disabled>
+    </div>
+
+
+    <div class="form-group">
+      <label for="prodi">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+    <circle cx="12" cy="10" r="3"/>
+  </svg>
+        Lokasi Kampus
+      </label>
+      <select id="lokasi_kampus" name="lokasi_kampus" disabled>
+        <option value="" disabled selected>-- Pilih Lokasi Kampus --</option>
+        <option value="Kampus Karawang">Kampus Karawang</option>
+        <option value="Kampus Bekasi">Kampus Bekasi</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="prodi">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+</svg>
+        Program Studi
+      </label>
+      <select id="prodi" name="prodi" disabled>
+        <option value="" disabled selected>-- Pilih Program Studi --</option>
+        <option value="Teknik Informatika">Teknik Informatika</option>
+        <option value="Manajemen">Manajemen</option>
+        <option value="Akuntansi">Akuntansi</option>
+        <option value="Ekonomi Islam">Ekonomi Islam</option>
+        <option value="Teknik Industri">Teknik Industri</option>
+        <option value="Sains Data">Sains Data</option>
+        <option value="Ilmu Komunikasi">Ilmu Komunikasi</option>
+        <option value="Ekonomi Pembangunan"> Ekonomi Pembangunan</option>
+
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <svg viewBox="0 0 24 24">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        Bukti Upload Foto
+      </label>
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="foto" name="foto" accept="image/*" disabled>
+        <div class="upload-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+        <div class="upload-text">Klik untuk upload atau <span>drag & drop</span></div>
+        <div class="upload-hint">Format JPG, PNG, WEBP — Maks. 5MB</div>
+      </div>
+
+      <div class="preview-container" id="previewContainer">
+        <img src="" alt="Preview" class="preview-img" id="previewImg">
+        <div class="preview-name" id="previewName"></div>
+        <button type="button" class="remove-btn" id="removeBtn" disabled>✕ Hapus Foto</button>
+      </div>
+    </div>
+
+    <button type="button" class="submit-btn" id="submitBtn" disabled>
+      <svg viewBox="0 0 24 24">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+      Kirim Absensi
+    </button>
+  </div>
+
+  <div class="form-footer"> <p> Ini adalah <strong>demo visual</strong>; absensi hanya dapat dilakukan melalui aplikasi resmi. </p>
+</div>
+</body>
+</html>
