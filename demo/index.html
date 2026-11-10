@@ -765,6 +765,211 @@
   flex-shrink: 0;
 }
 </style>
+<style>
+  body.demo-only {
+    background: #080a12;
+    color: #f5f3ff;
+  }
+
+  body.demo-only::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(196, 181, 253, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(196, 181, 253, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, #000 10%, transparent 78%);
+  }
+
+  .bg-layer {
+    background:
+      radial-gradient(ellipse at 18% 18%, rgba(80, 65, 160, 0.22), transparent 38%),
+      radial-gradient(ellipse at 82% 72%, rgba(31, 120, 147, 0.16), transparent 42%),
+      linear-gradient(145deg, #090b14, #0d1020 55%, #080a12);
+  }
+
+  .ornament {
+    border: 0;
+    filter: blur(36px);
+    opacity: 0.55;
+    animation: orbDrift 24s ease-in-out infinite;
+  }
+
+  .ornament.o1 {
+    width: 520px;
+    height: 520px;
+    top: -230px;
+    left: -180px;
+    background: radial-gradient(circle, rgba(111, 87, 220, 0.34), transparent 68%);
+  }
+
+  .ornament.o2 {
+    width: 480px;
+    height: 480px;
+    right: -200px;
+    bottom: -180px;
+    background: radial-gradient(circle, rgba(43, 160, 185, 0.27), transparent 68%);
+    animation-delay: -12s;
+  }
+
+  .ornament.o3,
+  .ornament::before,
+  .ornament::after {
+    display: none;
+  }
+
+  @keyframes orbDrift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(24px, -20px, 0) scale(1.06); }
+  }
+
+  .particle {
+    width: 2px;
+    height: 2px;
+    background: #c4b5fd;
+    box-shadow: 0 0 10px rgba(167, 139, 250, 0.75);
+    opacity: 0.32;
+  }
+
+  .beam {
+    background: linear-gradient(115deg,
+      transparent 42%,
+      rgba(129, 140, 248, 0.035) 49%,
+      rgba(103, 232, 249, 0.06) 52%,
+      transparent 60%);
+    animation-duration: 20s;
+  }
+
+  .container {
+    background: linear-gradient(155deg, rgba(20, 23, 39, 0.86), rgba(11, 14, 25, 0.92));
+    border: 1px solid rgba(196, 181, 253, 0.14);
+    box-shadow:
+      0 30px 90px rgba(0, 0, 0, 0.58),
+      0 0 90px rgba(91, 75, 170, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  }
+
+  .logo-wrapper::before {
+    background: conic-gradient(from 0deg,
+      #a78bfa, #67e8f9, #818cf8, #a78bfa);
+    opacity: 0.55;
+  }
+
+  .logo-wrapper::after {
+    background: #101321;
+    box-shadow: 0 0 28px rgba(129, 140, 248, 0.38);
+  }
+
+  .laurel-line {
+    background: linear-gradient(90deg, transparent, #a78bfa, transparent);
+  }
+
+  .laurel-star {
+    color: #c4b5fd;
+    text-shadow: 0 0 12px rgba(167, 139, 250, 0.58);
+  }
+
+  .uni-name {
+    text-shadow: 0 2px 24px rgba(129, 140, 248, 0.2);
+  }
+
+  .uni-name .gold {
+    background-image: linear-gradient(90deg, #c4b5fd, #e0f2fe, #a5f3fc);
+  }
+
+  .pkkmb-badge {
+    background: rgba(129, 140, 248, 0.1);
+    border-color: rgba(196, 181, 253, 0.25);
+    color: #ddd6fe;
+    box-shadow: 0 4px 20px rgba(129, 140, 248, 0.08);
+  }
+
+  .pkkmb-badge svg,
+  .form-group label,
+  .form-group label svg,
+  .submit-btn svg {
+    color: #c4b5fd;
+    stroke: #c4b5fd;
+  }
+
+  .demo-notice {
+    background: rgba(103, 232, 249, 0.055);
+    border-color: rgba(103, 232, 249, 0.2);
+    color: #c7f9ff;
+  }
+
+  .form-group input,
+  .form-group select {
+    background-color: rgba(255, 255, 255, 0.035);
+    border-color: rgba(196, 181, 253, 0.17);
+  }
+
+  .form-group input::placeholder {
+    color: rgba(226, 232, 240, 0.38);
+  }
+
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23c4b5fd' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  }
+
+  .form-group select option {
+    background: #111426;
+  }
+
+  .upload-area {
+    border-color: rgba(167, 139, 250, 0.32);
+    background: rgba(129, 140, 248, 0.045);
+  }
+
+  .upload-icon {
+    background: linear-gradient(145deg, #7161c8, #3e78a3);
+    box-shadow: 0 8px 26px rgba(91, 75, 170, 0.3);
+    animation: none;
+  }
+
+  .upload-icon::before {
+    display: none;
+  }
+
+  .upload-text span,
+  .form-footer strong {
+    color: #c4b5fd;
+  }
+
+  .submit-btn {
+    background: linear-gradient(110deg, #51469c, #3a6e91);
+    box-shadow:
+      0 10px 28px rgba(70, 76, 158, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    animation: none;
+  }
+
+  .submit-btn::after,
+  .submit-btn::before {
+    display: none;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.76;
+  }
+
+  .form-footer {
+    border-top-color: rgba(196, 181, 253, 0.12);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ornament,
+    .particle,
+    .beam,
+    .logo-wrapper::before,
+    .laurel-star {
+      animation: none !important;
+    }
+  }
+</style>
 </head>
 <body class="demo-only">
 
